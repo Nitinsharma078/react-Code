@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+ import React from 'react'
 
-function App() {
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+ import { showData,deletedata } from './action/index';
+
+const App = () => {
+  const data = useSelector((state)=> state.handledata);
+  console.log(data);
+
+  const dispatch = useDispatch();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    <div>
+    <h1>Data here </h1>
+    <button onClick={()=>dispatch(showData())}>showData</button>
+    <button onClick={()=>dispatch(deletedata(data))}>Delete</button>
+    <div className='showData'>
+      {data.map((item)=><div key={item.id} className='product-item'>
+        <button onClick={()=>dispatch(deletedata(item.id))}>Delete</button>
+        <div>{item.title}</div>
+        <div>{item.id}</div>
+        <img src={item.image} alt=''/>
+
+      </div>)}
+
     </div>
-  );
+    </div>
+  )
 }
 
-export default App;
+export default App
+
+
